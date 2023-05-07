@@ -1,15 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default function ContactList() {
-  return (
-    <div>
-      <input
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-      />
-    </div>
-  );
+export default class ContactList extends Component {
+  clickDelete = id => {
+    this.props.onDelete(id);
+  };
+  render() {
+    let { contacts, filter } = this.props;
+    contacts = filter.length ? filter : contacts;
+    return (
+      <ul>
+        {contacts.map(val => (
+          <li className="item" key={val.id}>
+            <p>
+              {val.name} {val.number}
+            </p>
+            <button
+              className="button"
+              type="button"
+              onClick={() => this.clickDelete(val.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  filter: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
