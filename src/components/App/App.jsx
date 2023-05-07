@@ -29,6 +29,7 @@ export class App extends Component {
     const newContact = { id: nanoid(3), name: name, number: number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
+      filter: [...prevState.contacts, newContact],
     }));
   };
 
@@ -44,8 +45,8 @@ export class App extends Component {
   onDelete = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
+      filter: prevState.filter.filter(contact => contact.id !== id),
     }));
-    console.log('onDelete - ', id);
   };
 
   render() {
