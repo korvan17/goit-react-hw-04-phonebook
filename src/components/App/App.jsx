@@ -36,11 +36,18 @@ export class App extends Component {
 
   findChange = e => {
     const name = e.target.value;
-    this.setState(prevState => ({
-      filter: prevState.contacts.filter(val =>
+    this.setState(prevState => {
+      const filteredContacts = prevState.contacts.filter(val =>
         val.name.toLowerCase().includes(name.toLowerCase())
-      ),
-    }));
+      );
+
+      return {
+        filter:
+          filteredContacts.length > 0
+            ? filteredContacts
+            : [{ id: 'id-1', name: 'no matches found' }],
+      };
+    });
   };
 
   onDelete = id => {

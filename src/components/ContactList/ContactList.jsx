@@ -15,13 +15,15 @@ export default class ContactList extends Component {
             <p>
               {val.name} {val.number}
             </p>
-            <button
-              className="button"
-              type="button"
-              onClick={() => this.clickDelete(val.id)}
-            >
-              Delete
-            </button>
+            {val.name !== 'no matches found' && (
+              <button
+                className="button"
+                type="button"
+                onClick={() => this.clickDelete(val.id)}
+              >
+                Delete
+              </button>
+            )}
           </li>
         ))}
       </ul>
