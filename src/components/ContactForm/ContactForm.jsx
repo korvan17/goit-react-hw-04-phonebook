@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-export default class ContactForm extends Component {
-  handleSubmit = e => {
+export default function ContactForm({ onSabmit }) {
+  function handleSubmit(e) {
     e.preventDefault();
     const { name, number } = e.target;
-    this.props.onSabmit(name.value, number.value);
+    onSabmit(name.value, number.value);
   };
-
-  render() {
+  
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <label>
           <span>Name</span>
           <input
@@ -35,7 +34,6 @@ export default class ContactForm extends Component {
         </button>
       </form>
     );
-  }
 }
 
 ContactForm.propTypes = {

@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class ContactList extends Component {
-  clickDelete = id => {
-    this.props.onDelete(id);
+export default function ContactList({ contacts, filter, onDelete }) {
+
+  function clickDelete(id) {
+    onDelete(id);
   };
-  render() {
-    let { contacts, filter } = this.props;
     contacts = filter.length ? filter : contacts;
+
     return (
       <ul>
         {contacts.map(val => (
@@ -19,7 +19,7 @@ export default class ContactList extends Component {
               <button
                 className="button"
                 type="button"
-                onClick={() => this.clickDelete(val.id)}
+                onClick={() => clickDelete(val.id)}
               >
                 Delete
               </button>
@@ -28,7 +28,7 @@ export default class ContactList extends Component {
         ))}
       </ul>
     );
-  }
+
 }
 
 ContactList.propTypes = {
@@ -43,7 +43,7 @@ ContactList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+      number: PropTypes.string,
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,
