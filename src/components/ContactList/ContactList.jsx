@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ContactList({ contacts, filter, onDelete }) {
+export default function ContactList({ contacts, onDelete }) {
 
   function clickDelete(id) {
     onDelete(id);
   };
-    contacts = filter.length ? filter : contacts;
-
     return (
       <ul>
         {contacts.map(val => (
@@ -37,13 +35,6 @@ ContactList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  filter: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string,
     })
   ).isRequired,
   onDelete: PropTypes.func.isRequired,

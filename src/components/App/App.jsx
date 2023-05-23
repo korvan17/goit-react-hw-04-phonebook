@@ -9,7 +9,7 @@ import { MainConteiner } from './App.styled';
 export function App() {
 
   const [contacts, setContacts ] = useState(JSON.parse(localStorage.getItem('contacts')) ?? [])
-  const [filter, setFilter ] = useState([])
+  const [filter, setFilter ] = useState('')
 
   useEffect(() => {
     console.log('contacts - ', contacts)
@@ -30,11 +30,11 @@ export function App() {
     setContacts(state => [...state, newContact])
   };
 
-  function findChange(e) {
-    const name = e.target.value;
-    const filteredContacts = contacts.filter(val => val.name.toLowerCase().includes(name.toLowerCase()))
-    setFilter(filteredContacts.length ? filteredContacts : [{ id: 'id-1', name: 'no matches found' }]);
+  function onChange({ target: { value } }) {
+      setFilter(value);
   }
+
+  const filteredContacts = contacts?.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
 
   function onDelete(id) {
     setContacts(state => state.filter(contact => contact.id !== id));
@@ -47,10 +47,10 @@ export function App() {
         <ContactForm onSabmit={onFormSubmit} />
 
         <h2>Contacts</h2>
-        <Filter findChange={findChange} />
+        <Filter onChange={onChange} />
         <ContactList
           onDelete={onDelete}
-          contacts={contacts}
+          contacts={filteredContacts}
           filter={filter}
         />
       </MainConteiner>
